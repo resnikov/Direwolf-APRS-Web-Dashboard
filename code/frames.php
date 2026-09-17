@@ -33,7 +33,7 @@ if (isset($callsign) and ($callsign !== "")) {
 }
 
 if (isset($_GET['ajax'])) {
-	if ($fixedlogname=="") echo('<a href="?daysback='.($_SESSION['daysback']+1).'">Earlier</a> | <a href="?daysback=0">Today</a> | <a href="?daysback='.($_SESSION['daysback']-1).'">Later</a> | ');
+	if ($fixedlogname=="") echo('<a href="?daysback='.($_SESSION['daysback']+1).'">Earlier</a> | <a href="?daysback=0">Today</a> | '.($_SESSION['daysback']>0 ? '<a href="?daysback='.($_SESSION['daysback']-1).'">Later</a> | ' : '')); // no Later link on today's log
 	echo('<B>'.(max(count($logfile)-1,0)).'</B> frames in logfile: <B>'.$newlogname.'</B> | ');
 	echo('<B>'.$framesoninterface.'</B> frames on Radio Interface <B>'.$intdesc[$if].'</B> for callsign containing: "<B>'.$callsign.'</B>" | ');
 	echo('Refresh Rate: <B>'.$refresh.' msec.</B><BR><BR>');

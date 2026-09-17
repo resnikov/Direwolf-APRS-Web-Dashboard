@@ -13,7 +13,7 @@ if(!isset($timevalue) or ($timevalue == "")) { //if time range not specified
         } elseif($timevalue == "e") { //if whole log
         	$time = 0;
         } else { //else if the time range is choosen
-        	$time = time() - ($timevalue * 3600); //convert hours to seconds
+        	$time = time() - (intval($timevalue) * 3600); //convert hours to seconds
 }
 
 $receivedstations = array();
@@ -39,7 +39,7 @@ uasort($receivedstations, 'cmp');
 
 if(isset($_GET['ajax'])) {
 
-	if ($fixedlogname=="") echo("<a href='?daysback=".($_SESSION['daysback']+1)."'>Earlier</a> | <a href='?daysback=0'>	Today</a> | <a href='?daysback=".($_SESSION['daysback']-1)."'>Later</a> | ");
+	if ($fixedlogname=="") echo("<a href='?daysback=".($_SESSION['daysback']+1)."'>Earlier</a> | <a href='?daysback=0'>	Today</a> | ".($_SESSION['daysback']>0 ? "<a href='?daysback=".($_SESSION['daysback']-1)."'>Later</a> | " : "")); // no Later link on today's log
         echo('<B>'.(max(count($logfile)-1,0)).'</B> frames in logfile: <B>'.$newlogname.'</B> | <B>'.$framesoninterface.'</B> frames on Interface <B>'.$intdesc[$if].'</B><BR>');
 	echo('<script src="table-sort.min.js"></script><BR>');
 	echo("<script>map.getOverlays().clear();</script>");

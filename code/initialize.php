@@ -9,7 +9,7 @@ include 'functions.php';
 
 if (str_contains($_SERVER['PHP_SELF'],"traffic.php")) $_SESSION['daysback']=0; // go to logfile of today if traffic monitor is to be loaded
 
-if (!isset($_SESSION['daysback'])) $_SESSION['daysback']=0;
+if (!isset($_SESSION['daysback'])) $_SESSION['daysback']=0; else $_SESSION['daysback']=intval($_SESSION['daysback']); // older sessions may hold a non-numeric value
 
 if (!isset($_SESSION['showedbufferwarning'])) $_SESSION['showedbufferwarning']=0;
 
@@ -26,9 +26,10 @@ $if = $_SESSION['if'];
 
 // substr and strip_tags are used to get rid of possible malicious input
 
-if (isset($_GET['time']) and ($_GET['time'] !== "")) $_SESSION['timevalue'] = strip_tags(substr($_GET['time'],0,2));
+// only accept the values offered on the pages: anything else would end up in arithmetic and stop every page with a TypeError for the rest of the session
+if (isset($_GET['time']) and in_array($_GET['time'], array("1","2","4","6","12","e"), true)) $_SESSION['timevalue'] = $_GET['time'];
 
-if (isset($_GET['daysback']) and ($_GET['daysback'] !== "")) $_SESSION['daysback'] = strip_tags(substr($_GET['daysback'],0,2)); // else if (!isset($_GET['ajax'])) $_SESSION['daysback']=0;
+if (isset($_GET['daysback']) and ($_GET['daysback'] !== "")) $_SESSION['daysback'] = min(max(intval($_GET['daysback']),0),99); // else if (!isset($_GET['ajax'])) $_SESSION['daysback']=0;
 
 if (isset($_GET['getcall'])) $_SESSION['callsign'] = strip_tags(substr($_GET['getcall'],0,9));
 
@@ -36,8 +37,7 @@ if ($fixedlogname!="") {
 		$newlogname = $fixedlogname." (fixed)";
                 $log=$logpath.$fixedlogname;
         } else {
-                $daysback = date("d") - $_SESSION['daysback'];
-                $newlogname=date("Y-m-d",mktime(0,0,0,NULL,NULL+$daysback,NULL)).'.log';
+                $newlogname=gmdate("Y-m-d",time()-$_SESSION['daysback']*86400).'.log'; // Direwolf names its daily logfiles by UTC date
                 $log=$logpath.$newlogname;
 	}
 
