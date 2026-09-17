@@ -84,10 +84,10 @@ function stationparse($frame) { //function for parsing station information
 	global $if;
 	global $framesoninterface;
 
-	if($frame[0]==$if) //if frame received on selected radio interface
+	$frame=str_getcsv($frame,",",escape: "\\"); // split first: comparing the raw line's first character mixes up channel 1 with channels 10 and 11
+	if($frame[0]===(string)$if) //if frame received on selected radio interface
 	{
 		$framesoninterface++;
-		$frame=str_getcsv($frame,",",escape: "\\");
 		$utime = $frame[1];
 		if($utime > $time) { //if frame was received in time range
 			$stationcall = htmlspecialchars(strip_tags(strtoupper($frame[8])));
