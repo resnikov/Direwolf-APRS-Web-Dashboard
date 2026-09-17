@@ -156,6 +156,25 @@ a:hover, a:active {
  color: blue;
 }
 
+a.linkbutton {
+ background-color: #D1E0C7;
+ color: black;
+ padding: 1px 5px;
+ margin-left: 4px;
+ text-align: center;
+ text-decoration: none;
+ display: inline-block;
+ border-radius: 5px;
+ border: 1px solid black;
+ font-size: 11px;
+ font-weight: bold;
+}
+
+a.linkbutton:hover, a.linkbutton:active {
+ background-color: orange;
+ text-decoration: none;
+}
+
 .aprsisobject {
  border: 1px solid black;
  width: 75%;

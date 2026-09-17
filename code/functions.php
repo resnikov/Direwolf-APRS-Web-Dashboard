@@ -68,6 +68,10 @@ function initializelog() { // function for initializing logfile
         }
 }
 
+function stripssid($callsign) { // strip SSID (dash and anything following) from a callsign, e.g. PD3RFR-10 becomes PD3RFR, for QRZ.com lookups
+	return preg_replace('/-.*$/', '', $callsign);
+}
+
 function stationparse($frame) { //function for parsing station information
 	global $stationcall;
 	global $receivedstations;

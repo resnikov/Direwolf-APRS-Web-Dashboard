@@ -50,9 +50,9 @@ if(isset($_GET['ajax'])) {
 			// echo($c." - ".$nm[6]." - ".$nm[5]." - ".$counter."<BR>"); // for analysis/debug purposes
 			if ($nm[6]!="" and $nm[5]!="") {
 				if (is_numeric($c)) {
-	                                $markerlink='<a href="'.$aislookuphost.$c.'" target="_blank">'.$c.'</a>';
+	                                $markerlink=$c.' <a class="linkbutton aisbutton" href="'.$aislookuphost.$c.'" target="_blank" title="View on MarineTraffic">AIS</a>';
 	                        } else {
-	                                $markerlink='<a href="'.$aprslookuphost.$c.'" target="_blank">'.$c.'</a>';
+	                                $markerlink=$c.' <a class="linkbutton aprsbutton" href="'.$aprslookuphost.$c.'" target="_blank" title="View on aprs.fi">APRS</a> <a class="linkbutton qrzbutton" href="'.$qrzlookuphost.stripssid($c).'" target="_blank" title="View on QRZ.com">QRZ</a>';
 	                        }
 
 				if (in_array($c, $staticstations)) $markerclass="markerstatic";
@@ -71,9 +71,9 @@ if(isset($_GET['ajax'])) {
 		foreach($receivedstations as $c=>$nm) {
 			echo('<tr>');
 			if (is_numeric($c)) {
-				echo('<td class="station"><a href="'.$aislookuphost.$c.'" target="_blank">'.$c.'</a></td>');
+				echo('<td class="station">'.$c.' <a class="linkbutton aisbutton" href="'.$aislookuphost.$c.'" target="_blank" title="View on MarineTraffic">AIS</a></td>');
 			} else {
-				echo('<td class="station"><a href="'.$aprslookuphost.$c.'" target="_blank">'.$c.'</a></td>');
+				echo('<td class="station">'.$c.' <a class="linkbutton aprsbutton" href="'.$aprslookuphost.$c.'" target="_blank" title="View on aprs.fi">APRS</a> <a class="linkbutton qrzbutton" href="'.$qrzlookuphost.stripssid($c).'" target="_blank" title="View on QRZ.com">QRZ</a></td>');
 			}
 			echo('<td class="frames"><a href="frames.php?getcall='.$c.'">'.$nm[0].'</a>');
 
