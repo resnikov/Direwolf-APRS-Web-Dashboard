@@ -33,6 +33,9 @@ $aprslookuphost = "https://aprs.fi/?call=";
 // for index.php: website URL for displaying AIS maritime vessel information
 $aislookuphost = "https://www.marinetraffic.com/en/ais/details/ships/mmsi:";
 
+// for index.php, igate.php and users.php: website URL for displaying QRZ.com callsign information
+$qrzlookuphost = "https://www.qrz.com/db/";
+
 // for aprsis.php and for system.php: IP Port of APRS-IS server that is used by Direwolf, default = 14580
 $aprsisserverport = 14580;
 

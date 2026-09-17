@@ -53,7 +53,7 @@ if(isset($_GET['ajax'])) {
 					} else {
 						$aprspath="RF";
 					}
-					echo('<TD class="station"><a href="https://aprs.fi/?call='.$outp_station["name"].'" target="_blank">'.$outp_station["name"].'</a></TD>');
+					echo('<TD class="station">'.$outp_station["name"].' <a class="linkbutton aprsbutton" href="https://aprs.fi/?call='.$outp_station["name"].'" target="_blank" title="View on aprs.fi">APRS</a> <a class="linkbutton qrzbutton" href="'.$qrzlookuphost.stripssid($outp_station["name"]).'" target="_blank" title="View on QRZ.com">QRZ</a></TD>');
 					echo('<TD>'.$date->format('H:i:s d-m-Y').'</TD>');
 					echo('<TD class="'.$igateclass.'"><B>'.$igatedesc.'</B></TD>');
 		                        echo('<TD>'.(secondsToTime($nowtime-$outp_station['lasttime'])).'</TD>');
