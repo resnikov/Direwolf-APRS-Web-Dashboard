@@ -23,7 +23,8 @@ if(isset($_GET['ajax'])) {
 	}
 
 	for ($n=0; $n<ceil(count($inp_stationusers_arr)/20);$n++) {
-		$inp_stations=implode(",",array_slice($inp_stationusers_arr,20*$n,20*(1+$n)));
+		$inp_chunk=array_slice($inp_stationusers_arr,20*$n,20); // aprs.fi accepts up to 20 names per request
+		$inp_stations=implode(",",$inp_chunk);
 		$json_url = "https://api.aprs.fi/api/get?name=".$inp_stations."&what=loc&apikey=".$apikey."&format=json";
 		$json = file_get_contents( $json_url, false, stream_context_create($arrContextOptions));
 		$json_output = json_decode( $json, true);
@@ -34,7 +35,7 @@ if(isset($_GET['ajax'])) {
 			exit();
 		}
 
-		foreach ( $inp_stationusers_arr as $inp_station ) { // for each station as defined $usersquery in config.php
+		foreach ( $inp_chunk as $inp_station ) { // for each station of this request, as defined in $usersquery in config.php
 			foreach ( $outp_stations_arr as $outp_station ) { // for each element of the output of the API of aprs.ri
 		                if ($outp_station["name"]==strtoupper($inp_station)) { // if the station from $usersquery equals the current station of the output of the API of aprs.fi
 			                $date = new DateTimeImmutable();
