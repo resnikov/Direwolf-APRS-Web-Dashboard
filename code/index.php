@@ -68,7 +68,7 @@ if(isset($_GET['ajax'])) {
 		}
 
 		echo('<table class="normaltable indextable table-sort table-arrows"><thead><tr>');
-		echo('<th>Station</b></th><th>Frames</b></th><th>Position</b></th><th>Received via</b></th><th class="onload-sort order-by-desc">Last Heard</b></th><th>Speed</th><th>Distance '.$distanceunit.'</b></th><th>Bearing</b></th></tr></thead>');
+		echo('<th>Station</b></th><th>Frames</b></th><th>Position</b></th><th>Received via</b></th><th class="data-sort onload-sort order-by-desc">Last Heard</b></th><th>Speed</th><th>Distance '.$distanceunit.'</b></th><th>Bearing</b></th></tr></thead>');
 		echo('<tbody>');
 		foreach($receivedstations as $c=>$nm) {
 			echo('<tr>');
@@ -91,7 +91,7 @@ if(isset($_GET['ajax'])) {
                         elseif (in_array($c, $directstations)) echo '<div class="direct">DIRECT</div>';
                         else if (in_array($c, $viastations)) echo '<div class="digi">DIGI</div>';
 
-                      	echo('</td><td>');
+                      	echo('</td><td data-sort="'.$nm[1].'">'); // sort on the Unix time: the displayed "H:i:s d-m-Y" text sorts by time of day before date
 
 	                $date = new DateTimeImmutable();
 	                $date = $date->setTimestamp($nm[1]);
