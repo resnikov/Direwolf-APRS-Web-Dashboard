@@ -14,7 +14,6 @@ if(isset($_GET['ajax'])) {
 	$stations=[];
 	$inp_sysop_arr = explode (",", $sysops);
 	$inp_stations_arr = explode (",", $stationsquery);
-	$arrContextOptions=array( "ssl"=>array("verify_peer"=>false,"verify_peer_name"=>false,),);
 	$i=0;
 
 	if (count($inp_stations_arr)!==count($inp_sysop_arr)) {
@@ -25,7 +24,11 @@ if(isset($_GET['ajax'])) {
 	for ($n=0; $n<ceil(count($inp_stations_arr)/20);$n++) {
 		$inp_stations=implode(",",array_slice($inp_stations_arr,20*$n,20*(1+$n)));
 		$json_url = "https://api.aprs.fi/api/get?name=".$inp_stations."&what=loc&apikey=".$apikey."&format=json";
-		$json = file_get_contents( $json_url, false, stream_context_create($arrContextOptions));
+		$json = file_get_contents( $json_url );
+		if ($json === false) { // no connection, or the certificate could not be verified (on Windows, set openssl.cafile in php.ini to a CA bundle such as cacert.pem)
+			echo('<TR><TD colspan=7><B>Could not connect to the aprs.fi API, see the web server error log.</b></TD></TR></TBODY></TABLE>');
+			exit();
+		}
 		$json_output = json_decode( $json, true);
 		$outp_stations_arr = $json_output[ 'entries' ];
 
