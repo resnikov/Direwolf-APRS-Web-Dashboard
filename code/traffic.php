@@ -45,7 +45,7 @@ function showrow($row) {
 	$name=htmlspecialchars(strip_tags($fields[8]));
 	$lat=htmlspecialchars(strip_tags($fields[10]));
 	$long=htmlspecialchars(strip_tags($fields[11]));
-	$comment=chunk_split(htmlspecialchars(strip_tags($fields[21]),60,"<BR>"));
+	$comment=chunk_split(htmlspecialchars(strip_tags($fields[21])),60,"<BR>"); // chunk_split for adding linebreaks in long comments
 
 	if ($fields[0]==$_SESSION['if'] or $displayallchannels==1) {
 		echo('<table class="normaltable traffic"><tr>');
